@@ -1,0 +1,83 @@
+<div class="justify-content-center d-flex">
+    <h1>Cátalogo de Productos</h1>
+</div>
+<div class="row g-4">
+    <div class="col-md-7">
+        <div class="d-flex justify-content-center">
+            <h4>Lista de Productos</h4>
+        </div>
+        <table class="table table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(producto of data; track producto.id){
+                <tr>
+                    <td>{{producto.nombre}}</td>
+                    <td>$ {{producto.precio}}</td>
+                    <td>{{producto.categoria}}</td>
+                    <td>{{producto.stock}} unidades</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm me-1" (click)="seleccionarProducto(producto)">
+                            <fa-icon [icon]="faEdit"></fa-icon>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="deleteProduct(producto.id)">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                        </button>
+                    </td>
+                    
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-5">
+        <div class="d-flex justify-content-center">
+            <h4>Formulario</h4>
+        </div>
+        <div>
+            <p>
+                <label>Nombre:</label>
+                <input type="text" class="form-control" [(ngModel)]="product.nombre">
+            </p>
+            <p>
+                <label>Precio:</label>
+                <input type="number" class="form-control" [(ngModel)]="product.precio">
+            </p>
+            <p>
+                <label>Categorías:</label>
+                <select class="form-control" [(ngModel)]="product.categoria">
+                    @for (categoria of categorias; track categoria){
+                        <option [value]="categoria">{{categoria}}</option>
+                    }
+                </select>
+            </p>
+            
+            <p>
+                <label>Stock:</label>
+                <input type="number" class="form-control" [(ngModel)]="product.stock">
+            </p>
+            <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" (click)="updateProduct(product)" [hidden]="!isEditing">
+                        <fa-icon [icon]="faSave"></fa-icon> Editar
+                    </button>
+                    <button class="btn btn-danger ms-3" (click)="cancelEdit()" [hidden]="!isEditing">
+                        <fa-icon [icon]="faTimes"></fa-icon> Cancelar
+                    </button>
+                    <button class="btn btn-success" (click)="addProduct()" [hidden]="isEditing">
+                        <fa-icon [icon]="faSave"></fa-icon> Guardar
+                    </button>
+                    <button class="btn btn-secondary ms-3" (click)="clean()" [hidden]="isEditing">
+                        <fa-icon [icon]="faTimes"></fa-icon> Limpiar
+                    </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
